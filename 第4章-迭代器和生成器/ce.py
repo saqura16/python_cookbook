@@ -27,22 +27,65 @@
 
 
 
-from collections import deque 
-class linehistory:     
-    def __init__(self, lines, histlen=3):
-        self.lines = lines
-        self.history = deque(maxlen=histlen)
-    def __iter__(self):
-        for lineno, line in enumerate(self.lines,1):
-            self.history.append((lineno, line))
-            yield line     
-    def clear(self):
-        self.history.clear()
+# from collections import deque 
+# class linehistory:     
+#     def __init__(self, lines, histlen=3):
+#         self.lines = lines
+#         self.history = deque(maxlen=histlen)
+#     def __iter__(self):
+#         for lineno, line in enumerate(self.lines,1):
+#
+# self.history.append((lineno, line))
+#
+# yield line     
+#     def clear(self):
+#         self.history.clear()
         
         
-with open('4.1.txt') as f:
-    lines = linehistory(f)
-    for line in lines:
-        if 'python' in line:
-            for lineno, hline in lines.history:
-                print('{}:{}'.format(lineno, hline), end='')
+# with open('4.1.txt') as f:
+#     lines = linehistory(f)
+#     for line in lines:
+#         if 'python' in line:
+#
+# for lineno, hline in lines.history:
+#
+#     print('{}:{}'.format(lineno, hline), end='')
+
+
+
+
+from collections.abc import Iterable
+# def flatten(items, ignore_types=(str, bytes)):   
+#     for x in items:         
+#         if isinstance(x, Iterable) and not isinstance(x, ignore_types):
+#             yield from flatten(x)        
+#         else:
+#             yield x 
+                
+# items = [1, 2, [3, 4, [5, 6], 7], 8] 
+# # Produces 1 2 3 4 5 6 7 8 
+# for x in flatten(items):
+#     print(x)
+
+
+# def flatten1(items, ignore_types=(str, bytes)): 
+#     for x in items: 
+#         if isinstance(x, Iterable) and not isinstance(x, ignore_types):
+#             for i in flatten1(x):
+#                 yield i 
+#         else: 
+#             yield x 
+
+# items = [1, 2, [3, 4, [5, 6], 7], 8] 
+
+# for i in flatten1(items):
+#     print(i)
+
+
+# import heapq 
+# a = [11, 10, 7, 1] 
+# b = [41, 11, 6, 2] 
+# for c in heapq.merge(a, b): 
+#     print(c)
+    
+    
