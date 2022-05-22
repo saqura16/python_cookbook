@@ -204,51 +204,130 @@
 #     t4.join()
         
 
-from threading import Thread
+# from threading import Thread
 
-class threads_object(Thread):
-    def run(self):
-        function_to_run()
+# class threads_object(Thread):
+#     def run(self):
+#         function_to_run()
 
-class nothreads_object(object):
-    def run(self):
-        function_to_run()
+# class nothreads_object(object):
+#     def run(self):
+#         function_to_run()
 
-def non_threaded(num_iter):
-    funcs = []
-    for i in range(int(num_iter)):
-        funcs.append(nothreads_object())
-    for i in funcs:
-        i.run()
+# def non_threaded(num_iter):
+#     funcs = []
+#     for i in range(int(num_iter)):
+#         funcs.append(nothreads_object())
+#     for i in funcs:
+#         i.run()
 
-def threaded(num_threads):
-    funcs = []
-    for i in range(int(num_threads)):
-        funcs.append(threads_object())
-    for i in funcs:
-        i.start()
-    for i in funcs:
-        i.join()
+# def threaded(num_threads):
+#     funcs = []
+#     for i in range(int(num_threads)):
+#         funcs.append(threads_object())
+#     for i in funcs:
+#         i.start()
+#     for i in funcs:
+#         i.join()
 
-def function_to_run():
-    a, b = 0, 1
-    for i in range(10000):
-        a, b = b, a + b
-def show_results(func_name, results):
-    print("%-23s %4.6f seconds" % (func_name, results))
+# def function_to_run():
+#     a, b = 0, 1
+#     for i in range(10000):
+#         a, b = b, a + b
+# def show_results(func_name, results):
+#     print("%-23s %4.6f seconds" % (func_name, results))
 
+# if __name__ == "__main__":
+#     import sys
+#     from timeit import Timer
+#     repeat = 100
+#     number = 1
+#     num_threads = [1, 2, 4, 8]
+#     print('Starting tests')
+#     for i in num_threads:
+#         t = Timer("non_threaded(%s)" % i, "from __main__ import non_threaded")
+#         best_result = min(t.repeat(repeat=repeat, number=number))
+#         show_results("non_threaded (%s iters)" % i, best_result)
+#         t = Timer("threaded(%s)" % i, "from __main__ import threaded")
+#         best_result = min(t.repeat(repeat=repeat, number=number))
+#         show_results("threaded (%s threads)" % i, best_result)
+#         print('Iterations complete')
+
+
+
+
+# import threading
+
+# def function(i):
+#     print ("function called by thread %i\n" % i)
+#     return
+
+# threads = []
+
+# for i in range(5):
+#     t = threading.Thread(target=function , args=(i, ))
+#     threads.append(t)
+#     t.start()
+#     t.join()
+
+
+
+
+import threading
+import time
+
+class Box(object):
+    lock = threading.RLock()
+    k=123
+    def __init__(self):
+        self.total_items = 0
+
+
+    def execute(self, n):
+        self.lock.acquire()
+        self.total_items += n
+        self.lock.release()
+        
+
+    def add(self):
+        self.lock.acquire()
+        self.execute(1)
+        self.lock.release()
+        
+        
+
+    def remove(self):
+        self.lock.acquire()
+        self.execute(-1)
+        self.lock.release()
+
+## These two functions run n in separate
+## threads and call the Box's methods
+def adder(box, items):
+    while items > 0:
+        print("adding 1 item in the box")
+        box.add()
+        time.sleep(1)
+        items -= 1
+
+def remover(box, items):
+    while items > 0:
+        print("removing 1 item in the box")
+        box.remove()
+        time.sleep(1)
+        items -= 1
+
+## the main program build some
+## threads and make sure it works
 if __name__ == "__main__":
-    import sys
-    from timeit import Timer
-    repeat = 100
-    number = 1
-    num_threads = [1, 2, 4, 8]
-    print('Starting tests')
-    for i in num_threads:
-        t = Timer("non_threaded(%s)" % i, "from __main__ import non_threaded")
-        best_result = min(t.repeat(repeat=repeat, number=number))
-        show_results("non_threaded (%s iters)" % i, best_result)
-        t = Timer("threaded(%s)" % i, "from __main__ import threaded")
-        best_result = min(t.repeat(repeat=repeat, number=number))
-        show_results("threaded (%s threads)" % i, best_result)
-        print('Iterations complete')
+    items = 5
+    print("putting %s items in the box " % items)
+    box = Box()
+    t1 = threading.Thread(target=adder, args=(box, items))
+    t2 = threading.Thread(target=remover, args=(box, items))
+    t1.start()
+    t2.start()
+
+    t1.join()
+    t2.join()
+    print("%s items still remain in the box " % box.total_items)
