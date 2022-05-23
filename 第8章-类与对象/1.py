@@ -8,18 +8,18 @@
 #         self.year=year
 #     @classmethod
 #     def get_date(cls,data_as_string):
- 
+
 #         #这里第一个参数是cls， 表示调用当前的类名
- 
+
 #         year,month,day=map(int,data_as_string.split('-'))
 #         date1=cls(year,month,day)     #返回的是一个初始化后的类
 #         return date1
- 
+
 #     def out_date(self):
 #         print("year :",self.year)
 #         print("month :",self.month)
 #         print("day :",self.day)
-        
+
 # r=Data_test2.get_date("2020-1-1")
 # print(r)
 
@@ -27,21 +27,19 @@
 
 
 # class A:
-    
+
 #     def __init__(self,x,y):
 #         self.x = x
 #         self.y = y
-        
+
 #     def add(self,x,y):
 #         return x+y
-    
+
 #     def __repr__(self):
 #         return '{}+{}={}'.format(self.x,self.y,self.add(self.x,self.y))
-    
+
 # a=A(2,3)
 # print(a)
-
-
 
 
 # class Person:
@@ -61,7 +59,7 @@
 #     @first_name.deleter
 #     def first_name(self):
 #         raise AttributeError("Can't delete attribute")
-       
+
 # a=Person('dyd')
 # print(a.first_name)
 # a.first_name='gbd'
@@ -74,14 +72,13 @@
 # class B(A):
 #     def __init__(self):
 #         super().__init__()
-#         self.y = 1 
+#         self.y = 1
 #     @property
 #     def p(self):
 #         print(self.x,self.y)
-            
+
 # b=B()
 # b.p
-
 
 
 # class Person:
@@ -116,8 +113,8 @@
 #     @name.deleter
 #     def name(self):
 #         print('Deleting name')
-#         super(SubPerson, SubPerson).name.__delete__(self) 
-        
+#         super(SubPerson, SubPerson).name.__delete__(self)
+
 # s=SubPerson('dyd')
 # print(s.name)
 # s.name='gbd'
@@ -142,12 +139,12 @@
 #     @lazyproperty
 #     def area(self):
 #         print('Computing area')
-#         return math.pi * self.radius ** 2 
+#         return math.pi * self.radius ** 2
 #     @lazyproperty
 #     def perimeter(self):
 #         print('Computing perimeter')
 #         return 2 * math.pi * self.radius
-    
+
 # c=Circle(4)
 # print(c.area)
 # print(c.perimeter)
@@ -176,13 +173,13 @@
 #     @lazyproperty
 #     def area(self):
 #         print('Computing area')
-#         return math.pi * self.radius ** 2 
+#         return math.pi * self.radius ** 2
 #     @lazyproperty
 #     def perimeter(self):
 #         print('Computing perimeter')
-#         return 2 * math.pi * self.radius 
+#         return 2 * math.pi * self.radius
 
-# c = Circle(4.0) 
+# c = Circle(4.0)
 # print(c.area )
 # print(c.area )
 
@@ -193,7 +190,7 @@
 #     _fields= []
 #     def __init__(self, *args):
 #         # len(args)指的是列表中元素的个数
-#         if len(args) != len(self._fields): 
+#         if len(args) != len(self._fields):
 #             raise TypeError('Expected {} arguments'.format(len(self._fields)))
 #         # Set the arguments
 #         for name, value in zip(self._fields, args):
@@ -229,10 +226,10 @@
 # # Example use
 # if __name__ == '__main__':
 #     class Stock(Structure):
-#         _fields = ['name', 'shares', 'price'] 
+#         _fields = ['name', 'shares', 'price']
 #     #s1 = Stock('ACME', 50, 91.1)
 #     #s2 = Stock('ACME', 50, price=91.1)
-#     s3 = Stock('ACME', price=91.1, shares=50) 
+#     s3 = Stock('ACME', price=91.1, shares=50)
 #     print(1)
 
 # from abc import ABCMeta, abstractmethod
@@ -242,33 +239,33 @@
 #         pass
 #     @abstractmethod
 #     def write(self, data):
-#         pass 
+#         pass
 
 
 # Base class. Uses a descriptor to set a value
-# class Descriptor: 
+# class Descriptor:
 #     def __init__(self, name=None, **opts):
 #         self.name = name
 #         for key, value in opts.items():
 #             setattr(self, key, value)
 #     def __set__(self, instance, value):
 #         instance.__dict__[self.name] = value
-        
+
 # # Descriptor for enforcing types
 # class Typed(Descriptor):
-#     expected_type = type(None) 
+#     expected_type = type(None)
 #     def __set__(self, instance, value):
 #         if not isinstance(value, self.expected_type):
 #             raise TypeError('expected ' + str(self.expected_type))
 #         super().__set__(instance, value)
-        
+
 # # Descriptor for enforcing values
 # class Unsigned(Descriptor):
 #     def __set__(self, instance, value):
 #         if value < 0:
 #             raise ValueError('Expected >= 0')
 #         super().__set__(instance, value)
-        
+
 # class MaxSized(Descriptor):
 #     def __init__(self, name=None, **opts):
 #         if 'size' not in opts:  #opts是个字典！size是key,判断是否传入了size的大小
@@ -278,7 +275,7 @@
 #         if len(value) >= self.size:
 #             raise ValueError('size must be < ' + str(self.size))
 #         super().__set__(instance, value)
-        
+
 # class Integer(Typed):
 #     expected_type = int
 # class UnsignedInteger(Integer, Unsigned):
@@ -290,7 +287,7 @@
 # class String(Typed):
 #     expected_type = str
 # class SizedString(String, MaxSized):
-#     pass 
+#     pass
 
 # class Stock:
 #     # Specify constraints
@@ -301,8 +298,8 @@
 #         self.name = name
 #         self.shares = shares
 #         self.price = price
-    
-# if __name__ == "__main__":    
+
+# if __name__ == "__main__":
 #     s = Stock('ACME', 50, 91.1)
 #     print( s.name )
 #     s.shares = 75
@@ -330,7 +327,7 @@
 #         else:
 #             print('delattr:', name)
 #             delattr(self._obj, name)
-            
+
 # class Spam:
 #     def __init__(self, x):
 #         self.x = x
@@ -374,8 +371,8 @@
 #     @staticmethod
 #     def close(conn):
 #         raise NotImplementedError()
-        
-# # Implementation of different states        
+
+# # Implementation of different states
 # class ClosedConnectionState(ConnectionState):   #close类
 #     @staticmethod
 #     def read(conn):
@@ -390,7 +387,7 @@
 #     def close(conn):
 #         raise RuntimeError('Already closed')
 
-# class OpenConnectionState(ConnectionState):     #open类  
+# class OpenConnectionState(ConnectionState):     #open类
 #     @staticmethod
 #     def read(conn):
 #         print('reading')
@@ -402,7 +399,7 @@
 #         raise RuntimeError('Already open')
 #     @staticmethod
 #     def close(conn):
-#         conn.new_state(ClosedConnectionState) 
+#         conn.new_state(ClosedConnectionState)
 
 # c = Connection()
 # print(c._state)
@@ -411,7 +408,7 @@
 # c.read()
 # c.write('hello')
 # c.close()
-# print(c._state) 
+# print(c._state)
 
 
 # class Connection:
@@ -437,7 +434,7 @@
 #         self.new_state(OpenConnection)
 #     def close(self):
 #         raise RuntimeError('Already closed')
-      
+
 #     def _state(self):
 #         return self.__class__
 # class OpenConnection(Connection):
@@ -446,12 +443,11 @@
 #     def write(self, data):
 #         print('writing')
 #     def open(self):
-#         raise RuntimeError('Already open')  
+#         raise RuntimeError('Already open')
 #     def close(self):
 #         self.new_state(ClosedConnection)
 #     def _state(self):
 #         return self.__class__
-    
 
 
 # c=Connection()
@@ -504,7 +500,7 @@
 #             meth = self.generic_visit
 #         return meth(node)
 #     def generic_visit(self, node):
-#         raise RuntimeError('No {} method'.format('visit_' + type(node).__name__)) 
+#         raise RuntimeError('No {} method'.format('visit_' + type(node).__name__))
 # class Evaluator(NodeVisitor):
 #     def visit_Number(self, node):
 #         return node.value
@@ -518,8 +514,7 @@
 #         return self.visit(node.left) / self.visit(node.right)
 #     def visit_Negate(self, node):
 #         return -node.operand
-    
-    
+
 
 # # Representation of 1 + 2 * (3 - 4) / 5
 # t1 = Sub(Number(3), Number(4))
@@ -538,7 +533,7 @@
 # c=getattr(a, 'bar2', 3)    # 属性 bar2 不存在，但设置了默认值
 
 # print(a.bar,c)
-# print(a.__dict__)   
+# print(a.__dict__)
 # import types
 
 
@@ -645,8 +640,6 @@
 #     print(e.visit(t4))  # Outputs 0.6
 
 
-
-
 # import types
 # class Node:
 #     pass
@@ -730,10 +723,8 @@
 # a = Number(0)
 # for n in range(1,100000):
 #     a = Add(a, Number(n))
-# e = Evaluator() 
+# e = Evaluator()
 # print(e.visit(a))
-
-
 
 
 # # Class just to illustrate when deletion occurs
@@ -756,7 +747,7 @@
 
 #     def add_child(self, child):
 #         self.children.append(child)
-#         child.parent = self 
+#         child.parent = self
 
 
 # a = Node()
@@ -768,21 +759,80 @@
 
 
 # Class just to illustrate when deletion occurs
-class Data:
-    def __del__(self):
-        print('Data.__del__')
-# Node class involving a cycle
-class Node:
-    def __init__(self):
-        self.data = Data()
-        self.parent = None
-        self.children = []
-    def add_child(self, child):
-        self.children.append(child)
-        child.parent = self
-        
-a = Node()
-a.add_child(Node())
-print(a)
-del a                   # Not deleted (no message)#但是如果打印a会被告知a未定义,我的理解是:a是Node类型,因为删除了部分(Data)但未完全删除a,导致a不完整,无法访问。
-print(11)
+# class Data:
+#     def __del__(self):
+#         print('Data.__del__')
+# # Node class involving a cycle
+# class Node:
+#     def __init__(self):
+#         self.data = Data()
+#         self.parent = None
+#         self.children = []
+#     def add_child(self, child):
+#         self.children.append(child)
+#         child.parent = self
+
+# a = Node()
+# a.add_child(Node())
+# print(a)
+# del a                   # Not deleted (no message)#但是如果打印a会被告知a未定义,我的理解是:a是Node类型,因为删除了部分(Data)但未完全删除a,导致a不完整,无法访问。
+# print(11)
+
+
+from functools import total_ordering
+
+
+class Room:
+    def __init__(self, name, length, width):
+        self.name = name
+        self.length = length
+        self.width = width
+        self.square_feet = self.length * self.width
+
+
+@total_ordering
+class House:
+    def __init__(self, name, style):
+        self.name = name
+        self.style = style
+        self.rooms = list()
+
+    @property
+    def living_space_footage(self):
+        return sum(r.square_feet for r in self.rooms)
+
+    def add_room(self, room):
+        self.rooms.append(room)
+
+    def __str__(self):
+        return '{}: {} square foot {}'.format(self.name, self.living_space_footage, self.style)
+
+    def __eq__(self, other):
+        return self.living_space_footage == other.living_space_footage
+
+    def __lt__(self, other):
+        return self.living_space_footage < other.living_space_footage
+
+
+# Build a few houses, and add rooms to them
+h1 = House('h1', 'Cape')
+h1.add_room(Room('Master Bedroom', 14, 21))
+h1.add_room(Room('Living Room', 18, 20))
+h1.add_room(Room('Kitchen', 12, 16))
+h1.add_room(Room('Office', 12, 12))
+h2 = House('h2', 'Ranch')
+h2.add_room(Room('Master Bedroom', 14, 21))
+h2.add_room(Room('Living Room', 18, 20))
+h2.add_room(Room('Kitchen', 12, 16))
+h3 = House('h3', 'Split')
+h3.add_room(Room('Master Bedroom', 14, 21))
+h3.add_room(Room('Living Room', 18, 20))
+h3.add_room(Room('Office', 12, 16))
+h3.add_room(Room('Kitchen', 15, 17))
+houses = [h1, h2, h3]
+print('Is h1 bigger than h2?', h1 > h2)  # prints True
+print('Is h2 smaller than h3?', h2 < h3)  # prints True
+print('Is h2 greater than or equal to h1?', h2 >= h1)  # Prints False
+# Prints 'h3: 1101-square-foot Split'
+print('Which one is biggest?', max(houses))
+print('Which is smallest?', min(houses))  # Prints 'h2: 846-square-foot Ranch'
